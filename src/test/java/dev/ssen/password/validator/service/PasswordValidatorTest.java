@@ -49,13 +49,13 @@ public class PasswordValidatorTest {
 	
 	@Test
 	public void testNonNullPasswordValid() {
-		passwordValidator.validate("pass");
+		assertTrue(passwordValidator.validate("Password1"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password should not be Empty")));
 	}
 	
 	@Test
 	public void testNoUppercaseInvalid() {
-		assertFalse(passwordValidator.validate("passwords"));
+		assertFalse(passwordValidator.validate("pass"));
 		assertThat(passwordValidator.getMessages(), hasItem("Password should have at least one Uppercase char"));
 	}
 	
@@ -73,7 +73,7 @@ public class PasswordValidatorTest {
 	
 	@Test
 	public void testNoLowerCaseInvalid() {
-		assertFalse(passwordValidator.validate("PASSWORDS"));
+		assertFalse(passwordValidator.validate("PASS"));
 		assertThat(passwordValidator.getMessages(), hasItem("Password should have at least one Lowercase char"));
 	}
 	
@@ -85,7 +85,7 @@ public class PasswordValidatorTest {
 	
 	@Test
 	public void testNoDigitInvalid() {
-		assertFalse(passwordValidator.validate("PASSWORDs"));
+		assertFalse(passwordValidator.validate("PASSs"));
 		assertThat(passwordValidator.getMessages(), hasItem("Password should have at least one Numeric char"));
 	}
 	
@@ -93,5 +93,13 @@ public class PasswordValidatorTest {
 	public void testDigitValid() {
 		assertTrue(passwordValidator.validate("Password1"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Numeric char")));
+	}
+	
+	@Test
+	/*
+	 * password should be valid if it fulfills 3 rules
+	 */
+	public void testThreeConditionsValid() {
+		assertTrue(passwordValidator.validate("Pass1"));
 	}
 }

@@ -17,14 +17,10 @@ public class PasswordValidator {
 
 	public boolean validate(String password) {
 		boolean isValid = true;
-		if(password == null) {
+		if(password == null || password.isEmpty()) {
 			isValid = false;
 			messages.add("Password should not be Empty");
 			return isValid;
-		}
-		if(password.isEmpty()) {
-			isValid = false;
-			messages.add("Password should not be Empty");
 		}
 		if (password.length() <= 8) {
 			isValid = false;

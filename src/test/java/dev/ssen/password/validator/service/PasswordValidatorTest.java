@@ -102,4 +102,12 @@ public class PasswordValidatorTest {
 	public void testThreeConditionsValid() {
 		assertTrue(passwordValidator.validate("Pass1"));
 	}
+	
+	@Test
+	/*
+	 * password is never valid is lower case char is missing
+	 */
+	public void testLowerCaseMandatory() {
+		assertFalse(passwordValidator.validate("PASSWORD1"));
+	}
 }

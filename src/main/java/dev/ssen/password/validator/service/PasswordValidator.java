@@ -26,9 +26,16 @@ public class PasswordValidator {
 			isValid = false;
 			messages.add("Password should not be Empty");
 		}
-		if (password.length() < 8) {
+		if (password.length() <= 8) {
 			isValid = false;
 			messages.add("Password length should be more than 8 chars");
+		}
+		
+		boolean hasUpperCaseChar = password.chars()
+				.anyMatch(ch -> Character.isLetter(ch) && Character.isUpperCase(ch));
+		if(!hasUpperCaseChar) {
+			isValid = false;
+			messages.add("Password should have at least one Uppercase char");
 		}
 
 		return isValid;

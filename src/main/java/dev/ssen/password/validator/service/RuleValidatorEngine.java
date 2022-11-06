@@ -11,11 +11,13 @@ public class RuleValidatorEngine {
 	private List<Rule> ruleList;
 	private List<String> messages;
 	private Boolean valid;
+	private Integer validRuleCount;
 
 	public RuleValidatorEngine(List<Rule> ruleList) {
 		this.ruleList = ruleList;
 		this.messages = new ArrayList<>();
 		this.valid = true;
+		this.validRuleCount = 0;
 	}
 
 	public void validate(String password) {
@@ -24,9 +26,12 @@ public class RuleValidatorEngine {
 				Optional<String> optionalMessage = rule.validate(password);
 				if (optionalMessage.isPresent()) {
 					messages.add(optionalMessage.get());
-					setValid(false);
+				}else {
+					incrementValidRuleCount();
 				}
 			}
+			
+			setValid(isCriteriaMet());
 		}
 	}
 
@@ -44,6 +49,14 @@ public class RuleValidatorEngine {
 
 	private void setValid(Boolean valid) {
 		this.valid = valid;
+	}
+	
+	private void incrementValidRuleCount() {
+		validRuleCount+=1;
+	}
+	
+	private Boolean isCriteriaMet() {
+		return (validRuleCount >=3) ;
 	}
 
 }

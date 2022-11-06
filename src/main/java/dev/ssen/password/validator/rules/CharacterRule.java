@@ -21,7 +21,7 @@ public class CharacterRule implements Rule {
 			if (!hasMatch)
 				return Optional.of(predicate.getMismatchMessage());
 		} catch (NullPointerException e) {
-			return Optional.empty();
+			return Optional.of(predicate.getMismatchMessage());
 		}
 
 		return Optional.empty();

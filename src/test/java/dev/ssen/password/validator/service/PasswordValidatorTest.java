@@ -62,7 +62,7 @@ public class PasswordValidatorTest {
 	
 	@Test
 	public void testUppercaseValid() {
-		assertTrue(passwordValidator.validate("Password"));
+		assertTrue(passwordValidator.validate("Passwords"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Uppercase char")));
 	}
 

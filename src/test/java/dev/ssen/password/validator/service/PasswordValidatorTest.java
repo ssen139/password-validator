@@ -31,7 +31,7 @@ public class PasswordValidatorTest {
 
 	@Test
 	public void testPasswordLengthValid() {
-		assertTrue(passwordValidator.validate("Passwords"));
+		assertTrue(passwordValidator.validate("Passwords1"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password length should be more than 8 chars")));
 	}
 	
@@ -61,7 +61,7 @@ public class PasswordValidatorTest {
 	
 	@Test
 	public void testUppercaseValid() {
-		assertTrue(passwordValidator.validate("Passwords"));
+		assertTrue(passwordValidator.validate("Passwords1"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Uppercase char")));
 	}
 
@@ -79,7 +79,19 @@ public class PasswordValidatorTest {
 	
 	@Test
 	public void testLowerCaseValid() {
-		assertTrue(passwordValidator.validate("PASSWORDs"));
+		assertTrue(passwordValidator.validate("PASSWORDs1"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Lowercase char")));
+	}
+	
+	@Test
+	public void testNoDigitInvalid() {
+		assertFalse(passwordValidator.validate("PASSWORDs"));
+		assertThat(passwordValidator.getMessages(), hasItem("Password should have at least one Numeric char"));
+	}
+	
+	@Test
+	public void testDigitValid() {
+		assertTrue(passwordValidator.validate("Password1"));
+		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Numeric char")));
 	}
 }

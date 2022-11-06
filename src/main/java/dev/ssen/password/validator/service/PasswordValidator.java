@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import dev.ssen.password.validator.rules.LengthRule;
+import dev.ssen.password.validator.rules.LowerCaseRule;
 import dev.ssen.password.validator.rules.UpperCaseRule;
 
 /**
@@ -26,6 +27,8 @@ public class PasswordValidator {
 		lengthRuleMessage.ifPresent(msg -> messages.add(msg));
 		Optional<String> upperCaseRuleMessage = new UpperCaseRule().validate(password);
 		upperCaseRuleMessage.ifPresent(msg -> messages.add(upperCaseRuleMessage.get()));
+		Optional<String> lowerCaseRuleMessage = new LowerCaseRule().validate(password);
+		lowerCaseRuleMessage.ifPresent(msg -> messages.add(lowerCaseRuleMessage.get()));
 		
 		isValid = messages.isEmpty();
 		return isValid;

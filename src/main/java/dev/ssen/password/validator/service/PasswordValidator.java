@@ -23,12 +23,9 @@ public class PasswordValidator {
 		boolean isValid = true;
 
 		Optional<String> lengthRuleMessage = new LengthRule().validate(password);
-		if(lengthRuleMessage.isPresent()) {
-			messages.add(lengthRuleMessage.get());
-		}else {
-			Optional<String> upperCaseRuleMessage = new UpperCaseRule().validate(password);
-			upperCaseRuleMessage.ifPresent(msg -> messages.add(upperCaseRuleMessage.get()));
-		}
+		lengthRuleMessage.ifPresent(msg -> messages.add(msg));
+		Optional<String> upperCaseRuleMessage = new UpperCaseRule().validate(password);
+		upperCaseRuleMessage.ifPresent(msg -> messages.add(upperCaseRuleMessage.get()));
 		
 		isValid = messages.isEmpty();
 		return isValid;

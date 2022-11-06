@@ -65,10 +65,21 @@ public class PasswordValidatorTest {
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Uppercase char")));
 	}
 
-
 	@Test
 	public void testPasswordLengthValid_NoUppercaseInvalid() {
 		assertFalse(passwordValidator.validate("passwords"));
 		assertThat(passwordValidator.getMessages(), not(hasItem("Password length should be more than 8 chars")));
+	}
+	
+	@Test
+	public void testNoLowerCaseInvalid() {
+		assertFalse(passwordValidator.validate("PASSWORDS"));
+		assertThat(passwordValidator.getMessages(), hasItem("Password should have at least one Lowercase char"));
+	}
+	
+	@Test
+	public void testLowerCaseValid() {
+		assertTrue(passwordValidator.validate("PASSWORDs"));
+		assertThat(passwordValidator.getMessages(), not(hasItem("Password should have at least one Lowercase char")));
 	}
 }

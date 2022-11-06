@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import dev.ssen.password.validator.predicates.LowerCasePredicate;
+import dev.ssen.password.validator.predicates.NumericCharPredicate;
 import dev.ssen.password.validator.predicates.UpperCasePredicate;
 import dev.ssen.password.validator.rules.CharacterRule;
 import dev.ssen.password.validator.rules.LengthRule;
@@ -23,7 +24,8 @@ public class PasswordValidator {
 		ruleValidatorEngine = new RuleValidatorEngine(
 				Arrays.asList(	new LengthRule(),
 								new CharacterRule(new UpperCasePredicate()), 
-								new CharacterRule(new LowerCasePredicate()) )
+								new CharacterRule(new LowerCasePredicate()),
+								new CharacterRule(new NumericCharPredicate()) )
 				);
 	}
 

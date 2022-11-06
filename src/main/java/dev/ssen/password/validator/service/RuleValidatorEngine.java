@@ -1,5 +1,6 @@
 package dev.ssen.password.validator.service;
 
+import static dev.ssen.password.validator.rules.RuleType.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,7 @@ public class RuleValidatorEngine {
 	private List<String> messages;
 	private Boolean valid;
 	private Integer validRuleCount;
+	private Boolean mandatoryRuleFailed = false;
 
 	public RuleValidatorEngine(List<Rule> ruleList) {
 		this.ruleList = ruleList;
@@ -26,7 +28,10 @@ public class RuleValidatorEngine {
 				Optional<String> optionalMessage = rule.validate(password);
 				if (optionalMessage.isPresent()) {
 					messages.add(optionalMessage.get());
-				}else {
+					if(rule.getRuleType().equals(MANDATORY)) {
+						setMandatoryRuleFailed();
+					}
+				} else {
 					incrementValidRuleCount();
 				}
 			}
@@ -56,7 +61,11 @@ public class RuleValidatorEngine {
 	}
 	
 	private Boolean isCriteriaMet() {
-		return (validRuleCount >=3) ;
+		return (validRuleCount >=3 && !mandatoryRuleFailed) ;
 	}
 
+	private void setMandatoryRuleFailed() {
+		mandatoryRuleFailed = true;
+	}
+	
 }

@@ -1,5 +1,6 @@
 package dev.ssen.password.validator.service;
 
+import static dev.ssen.password.validator.rules.RuleType.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,7 +25,7 @@ public class PasswordValidator {
 		ruleValidatorEngine = new RuleValidatorEngine(
 				Arrays.asList(	new LengthRule(),
 								new CharacterRule(new UpperCasePredicate()), 
-								new CharacterRule(new LowerCasePredicate()),
+								new CharacterRule(new LowerCasePredicate(), MANDATORY),
 								new CharacterRule(new NumericCharPredicate()) )
 				);
 	}

@@ -2,9 +2,20 @@ package dev.ssen.password.validator.rules;
 
 import static dev.ssen.password.validator.rules.RuleConstants.NULL_PASSWORD_MESSAGE;
 import static dev.ssen.password.validator.rules.RuleConstants.PASSWORD_LENGTH_MESSAGE;
+import static dev.ssen.password.validator.rules.RuleType.*;
 
 import java.util.Optional;
 public class LengthRule implements Rule {
+	
+	private RuleType ruleType;
+	
+	public LengthRule() {
+		this.ruleType = NON_MANDATORY;
+	}
+	
+	public LengthRule(RuleType ruleType) {
+		this.ruleType = ruleType;
+	}
 	
 	@Override
 	public Optional<String> validate(String password) {
@@ -16,6 +27,11 @@ public class LengthRule implements Rule {
 		}
 		
 		return Optional.empty();
+	}
+
+	@Override
+	public RuleType getRuleType() {
+		return ruleType;
 	}
 
 }

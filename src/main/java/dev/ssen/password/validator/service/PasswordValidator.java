@@ -2,6 +2,10 @@ package dev.ssen.password.validator.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+
+import dev.ssen.password.validator.rules.LengthRule;
+import dev.ssen.password.validator.rules.UpperCaseRule;
 
 /**
  * 
@@ -17,23 +21,16 @@ public class PasswordValidator {
 
 	public boolean validate(String password) {
 		boolean isValid = true;
-		if(password == null || password.isEmpty()) {
-			isValid = false;
-			messages.add("Password should not be Empty");
-			return isValid;
-		}
-		if (password.length() <= 8) {
-			isValid = false;
-			messages.add("Password length should be more than 8 chars");
+
+		Optional<String> lengthRuleMessage = new LengthRule().validate(password);
+		if(lengthRuleMessage.isPresent()) {
+			messages.add(lengthRuleMessage.get());
+		}else {
+			Optional<String> upperCaseRuleMessage = new UpperCaseRule().validate(password);
+			upperCaseRuleMessage.ifPresent(msg -> messages.add(upperCaseRuleMessage.get()));
 		}
 		
-		boolean hasUpperCaseChar = password.chars()
-				.anyMatch(ch -> Character.isLetter(ch) && Character.isUpperCase(ch));
-		if(!hasUpperCaseChar) {
-			isValid = false;
-			messages.add("Password should have at least one Uppercase char");
-		}
-
+		isValid = messages.isEmpty();
 		return isValid;
 	}
 

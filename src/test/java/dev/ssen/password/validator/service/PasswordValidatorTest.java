@@ -45,7 +45,6 @@ public class PasswordValidatorTest {
 	public void testEmptyPasswordInvalid() {
 		assertFalse(passwordValidator.validate(""));
 		assertThat(passwordValidator.getMessages(), hasItem("Password should not be Empty"));
-		assertThat(passwordValidator.getMessages(), hasItem("Password length should be more than 8 chars"));
 	}
 	
 	@Test

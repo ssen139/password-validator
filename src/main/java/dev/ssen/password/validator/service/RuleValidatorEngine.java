@@ -8,6 +8,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import dev.ssen.password.validator.rules.Rule;
+import dev.ssen.password.validator.util.PropertyReader;
 
 public class RuleValidatorEngine {
 
@@ -40,7 +41,7 @@ public class RuleValidatorEngine {
 
 	private void executeRule(Rule rule, String password) {
 		Optional<String> optionalMessage = rule.validate(password);
-		
+
 		if (optionalMessage.isPresent()) {
 			messages.add(optionalMessage.get());
 			if (rule.getRuleType().equals(MANDATORY)) {
@@ -72,11 +73,15 @@ public class RuleValidatorEngine {
 	}
 
 	private Boolean isCriteriaMet() {
-		return (validRuleCount.get() >= 3 && !mandatoryRuleFailed);
+		return (validRuleCount.get() >= getValidRuleThreshold() && !mandatoryRuleFailed);
 	}
 
 	private void setMandatoryRuleFailed() {
 		mandatoryRuleFailed = true;
+	}
+
+	private int getValidRuleThreshold() {
+		return Integer.valueOf(PropertyReader.getInstance().getProperty("validRuleThreshold").orElse("3"));
 	}
 
 }

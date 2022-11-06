@@ -1,6 +1,7 @@
 package dev.ssen.password.validator.service;
 
-import static dev.ssen.password.validator.rules.RuleType.*;
+import static dev.ssen.password.validator.rules.RuleType.MANDATORY;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

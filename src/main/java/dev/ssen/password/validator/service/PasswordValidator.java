@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import dev.ssen.password.validator.predicates.LowerCasePredicate;
+import dev.ssen.password.validator.predicates.UpperCasePredicate;
+import dev.ssen.password.validator.rules.CharacterRule;
 import dev.ssen.password.validator.rules.LengthRule;
-import dev.ssen.password.validator.rules.LowerCaseRule;
-import dev.ssen.password.validator.rules.UpperCaseRule;
 
 /**
  * 
@@ -19,7 +20,11 @@ public class PasswordValidator {
 
 	public PasswordValidator() {
 		messages = new ArrayList<String>();
-		ruleValidatorEngine = new RuleValidatorEngine(Arrays.asList(new LengthRule(), new UpperCaseRule(), new LowerCaseRule()));
+		ruleValidatorEngine = new RuleValidatorEngine(
+				Arrays.asList(	new LengthRule(),
+								new CharacterRule(new UpperCasePredicate()), 
+								new CharacterRule(new LowerCasePredicate()) )
+				);
 	}
 
 	public boolean validate(String password) {
@@ -31,7 +36,7 @@ public class PasswordValidator {
 	public List<String> getMessages() {
 		return messages;
 	}
-	
+
 	private void setMessages(List<String> messages) {
 		this.messages = messages;
 	}
